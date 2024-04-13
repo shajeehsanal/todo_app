@@ -38,6 +38,7 @@ dependencies:
   shared_preferences: ^2.2.2
   dropdown_button2: ^2.3.9
   flutter_riverpod: ^2.5.1
+  firebase_core: ^2.29.0
 
 dev_dependencies:
   flutter_test:
