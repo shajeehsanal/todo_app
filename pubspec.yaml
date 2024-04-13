@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.6
   shared_preferences: ^2.2.2
   dropdown_button2: ^2.3.9
+  flutter_riverpod: ^2.5.1
 
 dev_dependencies:
   flutter_test:
