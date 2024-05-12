@@ -44,10 +44,6 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text('Todo List'),
         elevation: 10,
-        titleTextStyle: const TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 20,
-        ),
         centerTitle: true,
         iconTheme: const IconThemeData(color: Colors.white),
         actions: [

@@ -50,12 +50,18 @@ class _MyAppState extends ConsumerState<MyApp> {
 
     return MaterialApp(
       theme: ThemeData(
-        colorScheme: ColorScheme.light(primary: Colors.blue.shade900),
+        colorScheme: ColorScheme.light(
+          primary: Colors.blue.shade900,
+          onPrimary: Colors.white,
+        ),
         useMaterial3: true,
         appBarTheme: AppBarTheme(backgroundColor: Colors.blue.shade900),
       ),
       darkTheme: ThemeData(
-        colorScheme: const ColorScheme.dark(primary: Colors.blue),
+        colorScheme: const ColorScheme.dark(
+          primary: Colors.blue,
+          onPrimary: Colors.white,
+        ),
         useMaterial3: true,
       ),
       themeMode: themeMode,
