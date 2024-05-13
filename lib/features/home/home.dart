@@ -1,7 +1,6 @@
-import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:todo_app/global/global_providers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
@@ -43,37 +42,55 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.blue.shade900,
-        shape: const CircularNotchedRectangle(),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            IconButton(
+      bottomNavigationBar: ClipRRect(
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(30),
+        ),
+        child: BottomAppBar(
+          color: Colors.blue.shade200,
+          shape: const CircularNotchedRectangle(),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              IconButton(
+                icon: Icon(
+                  Icons.home,
+                  color: selectedIndex == 0
+                      ? Theme.of(context).primaryColor
+                      : Colors.white,
+                ),
+                onPressed: () {},
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 18.0),
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.calendar_month,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {},
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 18.0),
+                child: IconButton(
+                  icon: const Icon(
+                    CupertinoIcons.doc_text_fill,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {},
+                ),
+              ),
+              IconButton(
                 icon: const Icon(
-                  Icons.abc,
+                  Icons.people,
                   color: Colors.white,
                 ),
-                onPressed: () {}),
-            IconButton(
-                icon: const Icon(
-                  Icons.abc,
-                  color: Colors.white,
-                ),
-                onPressed: () {}),
-            IconButton(
-                icon: const Icon(
-                  Icons.abc,
-                  color: Colors.white,
-                ),
-                onPressed: () {}),
-            IconButton(
-                icon: const Icon(
-                  Icons.abc,
-                  color: Colors.white,
-                ),
-                onPressed: () {}),
-          ],
+                onPressed: () {},
+              ),
+            ],
+          ),
         ),
       ),
       // appBar: AppBar(
@@ -130,6 +147,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         padding: const EdgeInsets.all(8.0),
         child: FloatingActionButton(
           onPressed: () {},
+          shape: const CircleBorder(),
           child: const Icon(Icons.add),
         ),
       ),

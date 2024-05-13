@@ -27,7 +27,7 @@ if (flutterVersionName == null) {
 
 android {
     namespace "com.example.todo_app"
-    compileSdk 21
+    compileSdk 34
     ndkVersion flutter.ndkVersion
 
     compileOptions {
