@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:todo_app/features/home/home.dart';
+import 'package:todo_app/features/navbar/navbar.dart';
 import 'package:todo_app/global/global_providers.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -65,7 +65,7 @@ class _MyAppState extends ConsumerState<MyApp> {
         useMaterial3: true,
       ),
       themeMode: themeMode,
-      home: const HomeScreen(),
+      home: const NavBar(),
       debugShowCheckedModeBanner: false,
     );
   }

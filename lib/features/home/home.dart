@@ -1,154 +1,71 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:todo_app/features/home/task_progress_widget.dart';
+import 'package:todo_app/global/global_variables.dart';
 
-class HomeScreen extends ConsumerStatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
-  ConsumerState<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends ConsumerState<HomeScreen> {
-  List<DropdownMenuItem> dropdownItems = [];
-  late SharedPreferences preferences;
-  final selectedIndexProvider = StateProvider<int>((ref) => 0);
-
-  @override
-  void initState() {
-    super.initState();
-    dropdownItems = [
-      const DropdownMenuItem(value: 'System', child: Icon(Icons.computer)),
-      const DropdownMenuItem(value: 'Light', child: Icon(Icons.light_mode)),
-      const DropdownMenuItem(value: 'Dark', child: Icon(Icons.dark_mode)),
-    ];
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final selectedIndex = ref.watch(selectedIndexProvider);
-    return Scaffold(
-      drawer: const Drawer(
+    double fontSize = width > height ? width * 0.2 : height * 0.2;
+    double iconSize = width > height ? width * 0.1 : height * 0.1;
+
+    return SafeArea(
+      child: SingleChildScrollView(
         child: Column(
           children: [
-            UserAccountsDrawerHeader(
-              accountName: Text('User Name'),
-              accountEmail: Text('User Email'),
-              currentAccountPicture: CircleAvatar(
-                backgroundColor: Colors.blueGrey,
-              ),
+            SizedBox(height: height * 0.03),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const CircleAvatar(radius: 30),
+                    SizedBox(width: width * 0.025),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Hello!',
+                          style: TextStyle(
+                            fontSize: fontSize * 0.1,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        Text(
+                          'Shajeeh Sanal',
+                          style: TextStyle(
+                            fontSize: fontSize * 0.15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                Stack(
+                  alignment: Alignment.topRight,
+                  children: [
+                    Icon(
+                      Icons.notifications,
+                      size: iconSize * 0.45,
+                      color: Colors.black,
+                    ),
+                    Positioned(
+                      right: 5,
+                      child: CircleAvatar(
+                        backgroundColor: Theme.of(context).primaryColor,
+                        radius: 8,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
+            SizedBox(height: height * 0.05),
+            const TaskProgressWidget(),
           ],
-        ),
-      ),
-      bottomNavigationBar: ClipRRect(
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(30),
-          topRight: Radius.circular(30),
-        ),
-        child: BottomAppBar(
-          color: Colors.blue.shade200,
-          shape: const CircularNotchedRectangle(),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              IconButton(
-                icon: Icon(
-                  Icons.home,
-                  color: selectedIndex == 0
-                      ? Theme.of(context).primaryColor
-                      : Colors.white,
-                ),
-                onPressed: () {},
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 18.0),
-                child: IconButton(
-                  icon: const Icon(
-                    Icons.calendar_month,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {},
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 18.0),
-                child: IconButton(
-                  icon: const Icon(
-                    CupertinoIcons.doc_text_fill,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {},
-                ),
-              ),
-              IconButton(
-                icon: const Icon(
-                  Icons.people,
-                  color: Colors.white,
-                ),
-                onPressed: () {},
-              ),
-            ],
-          ),
-        ),
-      ),
-      // appBar: AppBar(
-      //   title: const Text('Todo List'),
-      //   elevation: 10,
-      //   centerTitle: true,
-      //   iconTheme: const IconThemeData(color: Colors.white),
-      //   actions: [
-      //     Consumer(
-      //       builder: (context, ref, child) {
-      //         final themeMode = ref.watch(themeModeProvider);
-      //         String theme = themeMode == ThemeMode.system
-      //             ? 'System'
-      //             : themeMode == ThemeMode.light
-      //                 ? 'Light'
-      //                 : 'Dark';
-
-      //         return Padding(
-      //           padding: const EdgeInsets.only(right: 5),
-      //           child: DropdownButtonHideUnderline(
-      //             child: DropdownButton2(
-      //               items: dropdownItems,
-      //               value: theme,
-      //               onChanged: (value) async {
-      //                 preferences = await SharedPreferences.getInstance();
-      //                 preferences.setString(
-      //                   'themeMode',
-      //                   value.toString().trim(),
-      //                 );
-      //                 if (value == 'System') {
-      //                   ref
-      //                       .read(themeModeProvider.notifier)
-      //                       .update((state) => ThemeMode.system);
-      //                 } else if (value == 'Light') {
-      //                   ref
-      //                       .read(themeModeProvider.notifier)
-      //                       .update((state) => ThemeMode.light);
-      //                 } else {
-      //                   ref
-      //                       .read(themeModeProvider.notifier)
-      //                       .update((state) => ThemeMode.dark);
-      //                 }
-      //               },
-      //             ),
-      //           ),
-      //         );
-      //       },
-      //     )
-      //   ],
-      // ),
-      body: Container(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: FloatingActionButton(
-          onPressed: () {},
-          shape: const CircleBorder(),
-          child: const Icon(Icons.add),
         ),
       ),
     );
