@@ -78,7 +78,7 @@ class TaskProgressWidget extends StatelessWidget {
               padding: EdgeInsets.only(top: height * 0.02),
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(10),
+                  color: Colors.grey.withOpacity(0.6),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Icon(
