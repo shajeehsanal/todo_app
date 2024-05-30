@@ -51,7 +51,6 @@ class HomeScreen extends StatelessWidget {
                     Icon(
                       Icons.notifications,
                       size: iconSize * 0.45,
-                      color: Colors.black,
                     ),
                     Positioned(
                       right: 5,
@@ -134,7 +133,7 @@ class HomeScreen extends StatelessWidget {
                   }
                 },
               ),
-            )
+            ),
           ],
         ),
       ),

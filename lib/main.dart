@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:todo_app/core/theme/theme.dart';
 import 'package:todo_app/features/navbar/navbar.dart';
 import 'package:todo_app/global/global_providers.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -49,21 +50,8 @@ class _MyAppState extends ConsumerState<MyApp> {
     final themeMode = ref.watch(themeModeProvider);
 
     return MaterialApp(
-      theme: ThemeData(
-        colorScheme: ColorScheme.light(
-          primary: Colors.blue.shade900,
-          onPrimary: Colors.white,
-        ),
-        useMaterial3: true,
-        appBarTheme: AppBarTheme(backgroundColor: Colors.blue.shade900),
-      ),
-      darkTheme: ThemeData(
-        colorScheme: const ColorScheme.dark(
-          primary: Colors.blue,
-          onPrimary: Colors.white,
-        ),
-        useMaterial3: true,
-      ),
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
       themeMode: themeMode,
       home: const NavBar(),
       debugShowCheckedModeBanner: false,
