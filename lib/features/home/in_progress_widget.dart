@@ -71,6 +71,7 @@ class InProgressWidget extends StatelessWidget {
               style: TextStyle(
                 fontSize: fontSize * 0.12,
                 fontWeight: FontWeight.w500,
+                color: Colors.black,
               ),
             ),
           ),

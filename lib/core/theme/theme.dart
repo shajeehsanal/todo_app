@@ -13,6 +13,6 @@ class AppTheme {
   static final darkTheme = ThemeData.dark(useMaterial3: true).copyWith(
     primaryColor: Colors.blue,
     colorScheme: const ColorScheme.dark(primary: Colors.blue),
-    scaffoldBackgroundColor: const Color.fromARGB(137, 33, 33, 33),
+    scaffoldBackgroundColor: const Color.fromARGB(136, 58, 58, 58),
   );
 }

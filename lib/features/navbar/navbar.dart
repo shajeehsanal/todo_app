@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_app/features/home/home.dart';
+import 'package:todo_app/global/global_providers.dart';
 import 'package:todo_app/global/global_variables.dart';
 
 class NavBar extends ConsumerStatefulWidget {
@@ -32,6 +33,9 @@ class _NavBarState extends ConsumerState<NavBar> {
     final selectedIndex = ref.watch(selectedIndexProvider);
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
+    final isDarkMode =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
+    final themeMode = ref.watch(themeModeProvider);
 
     return Scaffold(
       drawer: const Drawer(
@@ -47,14 +51,41 @@ class _NavBarState extends ConsumerState<NavBar> {
           ],
         ),
       ),
-      body: selectedIndex == 0 ? const HomeScreen() : const SizedBox(),
+      body: selectedIndex == 0
+          ? const HomeScreen()
+          : selectedIndex == 3
+              ? Center(
+                  child: IconButton(
+                    onPressed: () {
+                      if (isDarkMode) {
+                        ref
+                            .read(themeModeProvider.notifier)
+                            .update((state) => ThemeMode.light);
+                      } else if (themeMode == ThemeMode.dark) {
+                        ref
+                            .read(themeModeProvider.notifier)
+                            .update((state) => ThemeMode.light);
+                      } else if (!isDarkMode || themeMode == ThemeMode.light) {
+                        ref
+                            .read(themeModeProvider.notifier)
+                            .update((state) => ThemeMode.dark);
+                      }
+                    },
+                    icon: Icon(
+                      isDarkMode || themeMode == ThemeMode.dark
+                          ? Icons.light_mode
+                          : Icons.dark_mode,
+                    ),
+                  ),
+                )
+              : const SizedBox(),
       bottomNavigationBar: ClipRRect(
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(30),
           topRight: Radius.circular(30),
         ),
         child: BottomAppBar(
-          color: Colors.blue.shade200,
+          color: Theme.of(context).primaryColor.withOpacity(0.2),
           shape: const CircularNotchedRectangle(),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
