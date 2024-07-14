@@ -1,5 +1,6 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:todo_app/global/global_variables.dart';
 
 class TaskProgressWidget extends StatelessWidget {
@@ -53,28 +54,55 @@ class TaskProgressWidget extends StatelessWidget {
               ),
             ],
           ),
-          CircularPercentIndicator(
-            animation: true,
-            radius: 45,
-            reverse: true,
-            animationDuration: 600,
-            percent: 0.85,
-            progressColor: color,
-            lineWidth: 8,
-            backgroundColor: Colors.grey.shade500,
-            center: TweenAnimationBuilder(
-                tween: Tween<double>(begin: 0, end: 85),
-                duration: const Duration(milliseconds: 600),
-                builder: (context, value, child) {
-                  return Text(
-                    '${value.round()}%',
-                    style: TextStyle(
-                      color: color,
-                      fontSize: fontSize * 0.12,
+          TweenAnimationBuilder(
+            tween: Tween<double>(begin: 0, end: 0.85),
+            duration: const Duration(milliseconds: 600),
+            builder: (context, value, child) => Stack(
+              alignment: Alignment.center,
+              children: [
+                Transform(
+                  transform: Matrix4.rotationY(pi),
+                  alignment: Alignment.center,
+                  child: SizedBox(
+                    height: width * 0.2,
+                    width: width * 0.2,
+                    child: CircularProgressIndicator(
+                      value: value,
+                      valueColor: AlwaysStoppedAnimation(color),
+                      strokeWidth: 10,
+                      backgroundColor: Colors.grey.shade500,
                     ),
-                  );
-                }),
+                  ),
+                ),
+                Text(
+                  '${(value * 100).round()}',
+                  style: TextStyle(color: color, fontSize: fontSize * 0.12),
+                ),
+              ],
+            ),
           ),
+          // CircularPercentIndicator(
+          //   animation: true,
+          //   radius: 45,
+          //   reverse: true,
+          //   animationDuration: 600,
+          //   percent: 0.85,
+          //   progressColor: color,
+          //   lineWidth: 8,
+          //   backgroundColor: Colors.grey.shade500,
+          //   center: TweenAnimationBuilder(
+          //       tween: Tween<double>(begin: 0, end: 85),
+          //       duration: const Duration(milliseconds: 600),
+          //       builder: (context, value, child) {
+          //         return Text(
+          //           '${value.round()}%',
+          //           style: TextStyle(
+          //             color: color,
+          //             fontSize: fontSize * 0.12,
+          //           ),
+          //         );
+          //       }),
+          // ),
           Align(
             alignment: Alignment.topCenter,
             child: Padding(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:todo_app/global/global_variables.dart';
 
 class InProgressWidget extends StatelessWidget {
@@ -77,15 +76,28 @@ class InProgressWidget extends StatelessWidget {
           ),
           SizedBox(
             width: width,
-            child: LinearPercentIndicator(
-              progressColor: progressBarColor,
-              percent: percent,
-              animationDuration: 600,
-              animation: true,
-              backgroundColor: Colors.white,
-              barRadius: const Radius.circular(15),
-              lineHeight: height * 0.01,
+            child: TweenAnimationBuilder(
+              tween: Tween<double>(begin: 0, end: percent),
+              duration: const Duration(milliseconds: 600),
+              builder: (context, value, child) => Padding(
+                padding: EdgeInsets.symmetric(horizontal: width * 0.02),
+                child: LinearProgressIndicator(
+                  value: value,
+                  valueColor: AlwaysStoppedAnimation(progressBarColor),
+                  minHeight: height * 0.01,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+              ),
             ),
+            // child: LinearPercentIndicator(
+            //   progressColor: progressBarColor,
+            //   percent: percent,
+            //   animationDuration: 600,
+            //   animation: true,
+            //   backgroundColor: Colors.white,
+            //   barRadius: const Radius.circular(15),
+            //   lineHeight: height * 0.01,
+            // ),
           ),
         ],
       ),

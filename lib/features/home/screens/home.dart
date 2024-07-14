@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/features/home/in_progress_widget.dart';
-import 'package:todo_app/features/home/task_progress_widget.dart';
+import 'package:todo_app/features/home/widgets/in_progress_widget.dart';
+import 'package:todo_app/features/home/widgets/task_progress_widget.dart';
 import 'package:todo_app/global/global_variables.dart';
 
 class HomeScreen extends StatelessWidget {
