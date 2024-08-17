@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/core/theme/palette.dart';
 
 class AppTheme {
+  static final _primaryColor = Palette.primaryColor.toColor();
+  static final _primaryColorLight = Palette.primaryColorLight.toColor();
   static final lightTheme = ThemeData.light(useMaterial3: true).copyWith(
-    primaryColor: const Color(0xff5F33E1),
+    primaryColor: _primaryColor,
     scaffoldBackgroundColor: Colors.white,
-    colorScheme: const ColorScheme.light(primary: Color(0xff5F33E1)),
-    appBarTheme: const AppBarTheme(
-      color: Color(0xff5F33E1),
-    ),
+    colorScheme: ColorScheme.light(primary: _primaryColor),
+    appBarTheme: AppBarTheme(color: _primaryColor),
   );
 
   static final darkTheme = ThemeData.dark(useMaterial3: true).copyWith(
-    primaryColor: Colors.blue,
-    colorScheme: const ColorScheme.dark(primary: Colors.blue),
+    primaryColor: _primaryColorLight,
+    colorScheme: ColorScheme.dark(primary: _primaryColorLight),
     scaffoldBackgroundColor: const Color.fromARGB(136, 58, 58, 58),
   );
 }
