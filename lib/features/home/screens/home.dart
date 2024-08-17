@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo_app/features/home/widgets/in_progress_widget.dart';
+import 'package:todo_app/features/home/widgets/task_group_widget.dart';
 import 'package:todo_app/features/home/widgets/task_progress_widget.dart';
+import 'package:todo_app/global/global_providers.dart';
 import 'package:todo_app/global/global_variables.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     double fontSize = width > height ? width * 0.2 : height * 0.2;
     double iconSize = width > height ? width * 0.1 : height * 0.1;
+    final themeMode = ref.watch(themeModeProvider);
 
     return SafeArea(
       child: SingleChildScrollView(
@@ -63,9 +67,9 @@ class HomeScreen extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: height * 0.05),
+            SizedBox(height: height * 0.03),
             const TaskProgressWidget(),
-            SizedBox(height: height * 0.05),
+            SizedBox(height: height * 0.02),
             Row(
               children: [
                 SizedBox(width: width * 0.05),
@@ -74,6 +78,9 @@ class HomeScreen extends StatelessWidget {
                   style: TextStyle(
                     fontSize: fontSize * 0.15,
                     fontWeight: FontWeight.bold,
+                    color: themeMode == ThemeMode.light
+                        ? Colors.black
+                        : Colors.white,
                   ),
                 ),
                 SizedBox(width: width * 0.02),
@@ -103,6 +110,8 @@ class HomeScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0).copyWith(
                         left: index == 0 ? width * 0.07 : null,
                         right: index == 5 ? width * 0.07 : null,
+                        top: 0,
+                        bottom: 0,
                       ),
                       child: InProgressWidget(
                         backgroundColor: Colors.blue.shade100,
@@ -119,6 +128,8 @@ class HomeScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0).copyWith(
                         left: index == 0 ? width * 0.07 : null,
                         right: index == 5 ? width * 0.07 : null,
+                        top: 0,
+                        bottom: 0,
                       ),
                       child: InProgressWidget(
                         backgroundColor: Colors.orange.shade100,
@@ -134,6 +145,72 @@ class HomeScreen extends StatelessWidget {
                 },
               ),
             ),
+            SizedBox(height: height * 0.02),
+            Row(
+              children: [
+                SizedBox(width: width * 0.05),
+                Text(
+                  'Task Groups',
+                  style: TextStyle(
+                    fontSize: fontSize * 0.15,
+                    fontWeight: FontWeight.bold,
+                    color: themeMode == ThemeMode.light
+                        ? Colors.black
+                        : Colors.white,
+                  ),
+                ),
+                SizedBox(width: width * 0.02),
+                CircleAvatar(
+                  backgroundColor: const Color.fromARGB(255, 200, 176, 245),
+                  radius: 12,
+                  child: Text(
+                    '4',
+                    style: TextStyle(
+                      color: Colors.deepPurple,
+                      fontSize: fontSize * 0.1,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: height * 0.4,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListView(
+                  children: [
+                    TaskGroupWidget(
+                      icon: Icons.cases_rounded,
+                      iconColor: Colors.pink.shade500,
+                      title: 'Office Project',
+                      subtitle: '23 Tasks',
+                      percent: 0.70,
+                    ),
+                    const TaskGroupWidget(
+                      icon: Icons.person,
+                      iconColor: Colors.purple,
+                      title: 'Personal Project',
+                      subtitle: '30 Tasks',
+                      percent: 0.52,
+                    ),
+                    TaskGroupWidget(
+                      icon: Icons.menu_book_outlined,
+                      iconColor: Colors.orange.shade800,
+                      title: 'Daily Study',
+                      subtitle: '30 Tasks',
+                      percent: 0.87,
+                    ),
+                    TaskGroupWidget(
+                      icon: Icons.show_chart_outlined,
+                      iconColor: Colors.yellow.shade700,
+                      title: 'Test Todo',
+                      subtitle: '15 Tasks',
+                      percent: 0.13,
+                    ),
+                  ],
+                ),
+              ),
+            )
           ],
         ),
       ),
