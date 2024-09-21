@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:todo_app/features/calendar_page/screens/calendar_page.dart';
 import 'package:todo_app/features/home/screens/home.dart';
 import 'package:todo_app/global/global_providers.dart';
 import 'package:todo_app/global/global_variables.dart';
@@ -53,32 +54,35 @@ class _NavBarState extends ConsumerState<NavBar> {
       ),
       body: selectedIndex == 0
           ? const HomeScreen()
-          : selectedIndex == 3
-              ? Center(
-                  child: IconButton(
-                    onPressed: () {
-                      if (isDarkMode) {
-                        ref
-                            .read(themeModeProvider.notifier)
-                            .update((state) => ThemeMode.light);
-                      } else if (themeMode == ThemeMode.dark) {
-                        ref
-                            .read(themeModeProvider.notifier)
-                            .update((state) => ThemeMode.light);
-                      } else if (!isDarkMode || themeMode == ThemeMode.light) {
-                        ref
-                            .read(themeModeProvider.notifier)
-                            .update((state) => ThemeMode.dark);
-                      }
-                    },
-                    icon: Icon(
-                      isDarkMode || themeMode == ThemeMode.dark
-                          ? Icons.light_mode
-                          : Icons.dark_mode,
-                    ),
-                  ),
-                )
-              : const SizedBox(),
+          : selectedIndex == 1
+              ? const CalendarPage()
+              : selectedIndex == 3
+                  ? Center(
+                      child: IconButton(
+                        onPressed: () {
+                          if (isDarkMode) {
+                            ref
+                                .read(themeModeProvider.notifier)
+                                .update((state) => ThemeMode.light);
+                          } else if (themeMode == ThemeMode.dark) {
+                            ref
+                                .read(themeModeProvider.notifier)
+                                .update((state) => ThemeMode.light);
+                          } else if (!isDarkMode ||
+                              themeMode == ThemeMode.light) {
+                            ref
+                                .read(themeModeProvider.notifier)
+                                .update((state) => ThemeMode.dark);
+                          }
+                        },
+                        icon: Icon(
+                          isDarkMode || themeMode == ThemeMode.dark
+                              ? Icons.light_mode
+                              : Icons.dark_mode,
+                        ),
+                      ),
+                    )
+                  : const SizedBox(),
       bottomNavigationBar: ClipRRect(
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(30),
