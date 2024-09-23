@@ -22,11 +22,12 @@ class InProgressWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double fontSize = width > height ? width * 0.2 : height * 0.2;
-    double iconSize = width > height ? width * 0.1 : height * 0.1;
+    final value = width > height;
+    double fontSize = value ? width * 0.1 : height * 0.2;
+    double iconSize = value ? width * 0.1 : height * 0.1;
 
     return Container(
-      width: width * 0.6,
+      width: width * (value ? 0.4 : 0.6),
       decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius: BorderRadius.circular(20),

@@ -7,7 +7,8 @@ class TaskProgressWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double fontSize = width > height ? width * 0.2 : height * 0.2;
+    var value = width > height;
+    double fontSize = value ? width * 0.1 : height * 0.2;
     final isDarkMode =
         MediaQuery.of(context).platformBrightness == Brightness.dark;
     final color = isDarkMode ? Colors.black : Colors.white;
@@ -56,7 +57,7 @@ class TaskProgressWidget extends StatelessWidget {
           PercentWidget(
             color: color,
             percent: 0.85,
-            size: width * 0.2,
+            size: value ? height * 0.15 : width * 0.2,
             thickness: 10,
           ),
           Align(

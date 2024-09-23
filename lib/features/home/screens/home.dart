@@ -11,7 +11,7 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    double fontSize = width > height ? width * 0.2 : height * 0.2;
+    double fontSize = width > height ? width * 0.1 : height * 0.2;
     double iconSize = width > height ? width * 0.1 : height * 0.1;
     final themeMode = ref.watch(themeModeProvider);
 
