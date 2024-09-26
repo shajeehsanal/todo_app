@@ -26,5 +26,6 @@ class AppTheme {
     colorScheme: ColorScheme.dark(primary: _primaryColorLight),
     scaffoldBackgroundColor: const Color.fromARGB(136, 58, 58, 58),
     textTheme: _textTheme,
+    cardTheme: const CardTheme(color: Colors.white30),
   );
 }

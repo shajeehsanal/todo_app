@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:todo_app/global/global_providers.dart';
 import 'package:todo_app/global/global_variables.dart';
 
-class DateCardWidget extends StatelessWidget {
+class DateCardWidget extends ConsumerWidget {
   final String month;
   final int date;
   final String day;
@@ -15,9 +17,20 @@ class DateCardWidget extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    final textColor = selected ? Colors.white : Colors.black;
-    final color = selected ? Theme.of(context).primaryColor : Colors.white;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+    final themeMode = ref.watch(themeModeProvider);
+    final isDarkMode = themeMode == ThemeMode.system
+        ? theme.brightness == Brightness.dark
+        : themeMode == ThemeMode.dark;
+    final Color? textColor;
+    if (selected) {
+      textColor = Colors.white;
+    } else {
+      textColor = isDarkMode ? null : Colors.black;
+    }
+    final color = selected ? theme.primaryColor : null;
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: width * 0.01),
       child: Card(

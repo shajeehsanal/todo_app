@@ -1,3 +1,4 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,7 +18,7 @@ class NavBar extends ConsumerStatefulWidget {
 class _NavBarState extends ConsumerState<NavBar> {
   List<DropdownMenuItem> dropdownItems = [];
   late SharedPreferences preferences;
-  final selectedIndexProvider = StateProvider<int>((ref) => 0);
+  final selectedIndexProvider = StateProvider.autoDispose<int>((ref) => 0);
 
   @override
   void initState() {
@@ -34,9 +35,12 @@ class _NavBarState extends ConsumerState<NavBar> {
     final selectedIndex = ref.watch(selectedIndexProvider);
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
-    final isDarkMode =
-        MediaQuery.of(context).platformBrightness == Brightness.dark;
     final themeMode = ref.watch(themeModeProvider);
+    String theme = themeMode == ThemeMode.system
+        ? 'System'
+        : themeMode == ThemeMode.light
+            ? 'Light'
+            : 'Dark';
 
     return Scaffold(
       drawer: const Drawer(
@@ -58,27 +62,30 @@ class _NavBarState extends ConsumerState<NavBar> {
               ? const CalendarPage()
               : selectedIndex == 3
                   ? Center(
-                      child: IconButton(
-                        onPressed: () {
-                          if (isDarkMode) {
-                            ref
-                                .read(themeModeProvider.notifier)
-                                .update((state) => ThemeMode.light);
-                          } else if (themeMode == ThemeMode.dark) {
-                            ref
-                                .read(themeModeProvider.notifier)
-                                .update((state) => ThemeMode.light);
-                          } else if (!isDarkMode ||
-                              themeMode == ThemeMode.light) {
-                            ref
-                                .read(themeModeProvider.notifier)
-                                .update((state) => ThemeMode.dark);
-                          }
-                        },
-                        icon: Icon(
-                          isDarkMode || themeMode == ThemeMode.dark
-                              ? Icons.light_mode
-                              : Icons.dark_mode,
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton2(
+                          items: dropdownItems,
+                          value: theme,
+                          onChanged: (value) async {
+                            preferences = await SharedPreferences.getInstance();
+                            preferences.setString(
+                              'themeMode',
+                              value.toString().trim(),
+                            );
+                            if (value == 'System') {
+                              ref
+                                  .read(themeModeProvider.notifier)
+                                  .update((state) => ThemeMode.system);
+                            } else if (value == 'Light') {
+                              ref
+                                  .read(themeModeProvider.notifier)
+                                  .update((state) => ThemeMode.light);
+                            } else {
+                              ref
+                                  .read(themeModeProvider.notifier)
+                                  .update((state) => ThemeMode.dark);
+                            }
+                          },
                         ),
                       ),
                     )
@@ -106,7 +113,7 @@ class _NavBarState extends ConsumerState<NavBar> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(right: 18.0),
+                padding: EdgeInsets.only(right: width * 0.05),
                 child: IconButton(
                   onPressed: () {
                     ref
@@ -122,7 +129,7 @@ class _NavBarState extends ConsumerState<NavBar> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 18.0),
+                padding: EdgeInsets.only(left: width * 0.05),
                 child: IconButton(
                   onPressed: () {
                     ref

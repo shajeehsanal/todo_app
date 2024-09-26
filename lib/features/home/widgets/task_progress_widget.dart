@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo_app/features/home/widgets/percent_widget.dart';
+import 'package:todo_app/global/global_providers.dart';
 import 'package:todo_app/global/global_variables.dart';
 
-class TaskProgressWidget extends StatelessWidget {
+class TaskProgressWidget extends ConsumerWidget {
   const TaskProgressWidget({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     var value = width > height;
     double fontSize = value ? width * 0.1 : height * 0.2;
-    final isDarkMode =
-        MediaQuery.of(context).platformBrightness == Brightness.dark;
+    final themeMode = ref.watch(themeModeProvider);
+    final isDarkMode = themeMode == ThemeMode.system
+        ? MediaQuery.of(context).platformBrightness == Brightness.dark
+        : themeMode == ThemeMode.dark;
     final color = isDarkMode ? Colors.black : Colors.white;
 
     return Container(
