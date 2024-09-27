@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/global/global_variables.dart';
 
 class InProgressWidget extends StatelessWidget {
   final Color backgroundColor;
@@ -22,6 +21,8 @@ class InProgressWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     final value = width > height;
     double fontSize = value ? width * 0.1 : height * 0.2;
     double iconSize = value ? width * 0.1 : height * 0.1;

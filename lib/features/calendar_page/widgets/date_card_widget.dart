@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo_app/global/global_providers.dart';
-import 'package:todo_app/global/global_variables.dart';
 
 class DateCardWidget extends ConsumerWidget {
   final String month;
@@ -18,6 +17,7 @@ class DateCardWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final width = MediaQuery.of(context).size.width;
     final theme = Theme.of(context);
     final themeMode = ref.watch(themeModeProvider);
     final isDarkMode = themeMode == ThemeMode.system

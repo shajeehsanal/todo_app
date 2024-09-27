@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo_app/features/home/widgets/percent_widget.dart';
 import 'package:todo_app/global/global_providers.dart';
-import 'package:todo_app/global/global_variables.dart';
 
 class TaskProgressWidget extends ConsumerWidget {
   const TaskProgressWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     var value = width > height;
     double fontSize = value ? width * 0.1 : height * 0.2;
     final themeMode = ref.watch(themeModeProvider);

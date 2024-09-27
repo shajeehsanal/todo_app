@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/features/home/widgets/percent_widget.dart';
-import 'package:todo_app/global/global_variables.dart';
 
 class TaskGroupWidget extends StatelessWidget {
   final IconData icon;
@@ -19,6 +18,7 @@ class TaskGroupWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return ListTile(
       leading: Container(
         decoration: BoxDecoration(

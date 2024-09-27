@@ -6,7 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_app/features/calendar_page/screens/calendar_page.dart';
 import 'package:todo_app/features/home/screens/home.dart';
 import 'package:todo_app/global/global_providers.dart';
-import 'package:todo_app/global/global_variables.dart';
 
 class NavBar extends ConsumerStatefulWidget {
   const NavBar({super.key});
@@ -33,10 +32,10 @@ class _NavBarState extends ConsumerState<NavBar> {
   @override
   Widget build(BuildContext context) {
     final selectedIndex = ref.watch(selectedIndexProvider);
-    width = MediaQuery.of(context).size.width;
-    height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
+    // final height = MediaQuery.of(context).size.height;
     final themeMode = ref.watch(themeModeProvider);
-    String theme = themeMode == ThemeMode.system
+    final theme = themeMode == ThemeMode.system
         ? 'System'
         : themeMode == ThemeMode.light
             ? 'Light'

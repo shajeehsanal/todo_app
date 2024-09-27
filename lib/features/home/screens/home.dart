@@ -4,16 +4,21 @@ import 'package:todo_app/features/home/widgets/in_progress_widget.dart';
 import 'package:todo_app/features/home/widgets/task_group_widget.dart';
 import 'package:todo_app/features/home/widgets/task_progress_widget.dart';
 import 'package:todo_app/global/global_providers.dart';
-import 'package:todo_app/global/global_variables.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     double fontSize = width > height ? width * 0.1 : height * 0.2;
     double iconSize = width > height ? width * 0.1 : height * 0.1;
+    final theme = Theme.of(context);
     final themeMode = ref.watch(themeModeProvider);
+    final isDarkMode = themeMode == ThemeMode.system
+        ? theme.brightness == Brightness.dark
+        : themeMode == ThemeMode.dark;
 
     return SafeArea(
       child: SingleChildScrollView(
@@ -78,9 +83,7 @@ class HomeScreen extends ConsumerWidget {
                   style: TextStyle(
                     fontSize: fontSize * 0.15,
                     fontWeight: FontWeight.bold,
-                    color: themeMode == ThemeMode.light
-                        ? Colors.black
-                        : Colors.white,
+                    color: isDarkMode ? Colors.white : Colors.black,
                   ),
                 ),
                 SizedBox(width: width * 0.02),
@@ -154,9 +157,7 @@ class HomeScreen extends ConsumerWidget {
                   style: TextStyle(
                     fontSize: fontSize * 0.15,
                     fontWeight: FontWeight.bold,
-                    color: themeMode == ThemeMode.light
-                        ? Colors.black
-                        : Colors.white,
+                    color: isDarkMode ? Colors.white : Colors.black,
                   ),
                 ),
                 SizedBox(width: width * 0.02),
