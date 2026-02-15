@@ -25,10 +25,8 @@ class TaskGroupWidget extends StatelessWidget {
           color: iconColor.withOpacity(0.2),
           borderRadius: BorderRadius.circular(10),
         ),
-        child: Padding(
-          padding: EdgeInsets.all(width * 0.02),
-          child: Icon(icon, color: iconColor),
-        ),
+        padding: EdgeInsets.all(width * 0.02),
+        child: Icon(icon, color: iconColor),
       ),
       title: Text(title),
       subtitle: Text(subtitle),

@@ -24,7 +24,7 @@ class InProgressWidget extends StatelessWidget {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     final value = width > height;
-    double fontSize = value ? width * 0.1 : height * 0.2;
+    double fontSize = value ? width * 0.15 : height * 0.2;
     double iconSize = value ? width * 0.1 : height * 0.1;
 
     return Container(
@@ -33,6 +33,7 @@ class InProgressWidget extends StatelessWidget {
         color: backgroundColor,
         borderRadius: BorderRadius.circular(20),
       ),
+      padding: EdgeInsets.only(bottom: value ? height * 0.02 : 0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [

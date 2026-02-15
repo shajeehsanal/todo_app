@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:todo_app/core/enums/year_month_enums.dart';
 import 'package:todo_app/core/utils/month_picker_custom.dart';
 import 'package:todo_app/features/calendar_page/widgets/date_card_widget.dart';
+import 'package:todo_app/features/calendar_page/widgets/task_widget.dart';
 
 class CalendarPage extends ConsumerStatefulWidget {
   const CalendarPage({super.key});
@@ -15,7 +16,6 @@ class CalendarPage extends ConsumerStatefulWidget {
 class _CalendarPageState extends ConsumerState<CalendarPage>
     with SingleTickerProviderStateMixin {
   final selectedDayProvider = StateProvider.autoDispose<int>((ref) => 0);
-  // final now = DateTime.now();
   final ScrollController daysScrollController = ScrollController();
   final dateProvider =
       StateProvider.autoDispose<DateTime>((ref) => DateTime.now());
@@ -57,6 +57,75 @@ class _CalendarPageState extends ConsumerState<CalendarPage>
     );
   }
 
+  List<Map<String, dynamic>> taskWidgetValues = [
+    {
+      "taskGroup": "Office Project",
+      "icon": Icons.cases_sharp,
+      "task": "Market Research",
+      "time": "10:00 AM",
+      "status": 3,
+      "iconColor": Colors.pink.shade500,
+    },
+    {
+      "taskGroup": "Office Project",
+      "icon": Icons.cases_sharp,
+      "task": "Competitive Analysis",
+      "time": "12:00 PM",
+      "status": 2,
+      "iconColor": Colors.pink.shade500,
+    },
+    {
+      "taskGroup": "Personal Project",
+      "icon": Icons.person,
+      "task": "Create Low-fidelity Wireframe",
+      "time": "07:00 PM",
+      "status": 1,
+      "iconColor": Colors.purple,
+    },
+    {
+      "taskGroup": "Daily Study",
+      "icon": Icons.menu_book_outlined,
+      "task": "How to pitch a Design Sprint",
+      "time": "09:00 PM",
+      "status": 1,
+      "iconColor": Colors.orange.shade800,
+    },
+  ];
+
+  Widget tasks({
+    required int activeIndex,
+    required List<Map<String, dynamic>> filteredList,
+    required double width,
+    required double height,
+  }) {
+    return ListView.builder(
+      padding: EdgeInsets.symmetric(horizontal: width * 0.06)
+          .copyWith(bottom: height * 0.035),
+      itemCount: filteredList.length,
+      itemBuilder: (context, index) {
+        var value = filteredList[index];
+        const noDataString = "No Data";
+        final taskGroup = value['taskGroup'] ?? noDataString;
+        final icon = value['icon'] ?? Icons.error;
+        final task = value['task'] ?? noDataString;
+        final time = value['time'] ?? noDataString;
+        final status = value['status'] ?? 1;
+        final iconColor = value['iconColor'] ?? Colors.red;
+
+        return TaskWidget(
+          taskGroup: taskGroup,
+          icon: icon,
+          task: task,
+          time: time,
+          status: status,
+          iconColor: iconColor,
+        );
+      },
+    );
+  }
+
+  List<List<Map<String, dynamic>>> generatedList = [];
+
   @override
   void initState() {
     super.initState();
@@ -73,6 +142,14 @@ class _CalendarPageState extends ConsumerState<CalendarPage>
       final value = tabController.animation?.value;
       final roundedValue = value?.round() ?? tabController.index;
       ref.read(activeIndexProvider.notifier).update((state) => roundedValue);
+    });
+    generatedList = List.generate(tabTexts.length, (index) {
+      if (index == 0) {
+        return taskWidgetValues;
+      }
+      return taskWidgetValues
+          .where((element) => element['status'] == index)
+          .toList();
     });
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       final width = MediaQuery.of(context).size.width;
@@ -110,6 +187,7 @@ class _CalendarPageState extends ConsumerState<CalendarPage>
     final theme = Theme.of(context);
     const radius = Radius.elliptical(20, 40);
     final primaryColor = theme.primaryColor;
+    final activeIndex = ref.watch(activeIndexProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -155,7 +233,7 @@ class _CalendarPageState extends ConsumerState<CalendarPage>
       ),
       body: Column(
         children: [
-          SizedBox(height: height * 0.05),
+          SizedBox(height: height * 0.02),
           Center(
             child: SizedBox(
               width: width,
@@ -192,48 +270,49 @@ class _CalendarPageState extends ConsumerState<CalendarPage>
             ),
           ),
           SizedBox(height: height * 0.03),
-          Consumer(
-            builder: (context, ref1, child) {
-              final activeIndex = ref1.watch(activeIndexProvider);
-              return TabBar(
-                controller: tabController,
-                tabs: tabs(
-                  width,
-                  height,
-                  activeIndex: activeIndex,
-                  theme: theme,
-                  radius: radius,
-                ),
-                isScrollable: true,
-                tabAlignment: TabAlignment.center,
-                indicator: BoxDecoration(
-                  color: primaryColor,
-                  borderRadius: const BorderRadius.only(
-                    topLeft: radius,
-                    topRight: radius,
-                    bottomLeft: radius,
-                    bottomRight: radius,
-                  ),
-                ),
-                labelColor: Colors.white,
-                indicatorSize: TabBarIndicatorSize.label,
-                overlayColor:
-                    const MaterialStatePropertyAll(Colors.transparent),
-                labelPadding: EdgeInsets.symmetric(horizontal: width * 0.02),
-                dividerHeight: 0,
-                unselectedLabelColor: primaryColor,
-              );
-            },
+          TabBar(
+            controller: tabController,
+            tabs: tabs(
+              width,
+              height,
+              activeIndex: activeIndex,
+              theme: theme,
+              radius: radius,
+            ),
+            isScrollable: true,
+            tabAlignment: TabAlignment.center,
+            indicator: BoxDecoration(
+              color: primaryColor,
+              borderRadius: const BorderRadius.only(
+                topLeft: radius,
+                topRight: radius,
+                bottomLeft: radius,
+                bottomRight: radius,
+              ),
+            ),
+            labelColor: Colors.white,
+            indicatorSize: TabBarIndicatorSize.label,
+            overlayColor: const MaterialStatePropertyAll(Colors.transparent),
+            labelPadding: EdgeInsets.symmetric(horizontal: width * 0.02),
+            dividerHeight: 0,
+            unselectedLabelColor: primaryColor,
           ),
+          SizedBox(height: height * 0.02),
           Expanded(
             child: TabBarView(
               controller: tabController,
-              children: const [
-                SizedBox(),
-                SizedBox(),
-                SizedBox(),
-                SizedBox(),
-              ],
+              children: List.generate(
+                tabTexts.length,
+                (index) {
+                  final filteredList = generatedList[index];
+                  return tasks(
+                    activeIndex: index,
+                    filteredList: filteredList,
+                    width: width,
+                    height: height,
+                  );
+                },
+              ),
             ),
           ),
         ],

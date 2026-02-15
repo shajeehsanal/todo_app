@@ -11,7 +11,7 @@ class TaskProgressWidget extends ConsumerWidget {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     var value = width > height;
-    double fontSize = value ? width * 0.1 : height * 0.2;
+    double fontSize = value ? width * 0.2 : height * 0.2;
     final themeMode = ref.watch(themeModeProvider);
     final isDarkMode = themeMode == ThemeMode.system
         ? MediaQuery.of(context).platformBrightness == Brightness.dark
